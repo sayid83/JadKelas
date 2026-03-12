@@ -4,287 +4,619 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jadual Peribadi Sekolah Rendah</title>
+    <script>const _w=console.warn;console.warn=(...a)=>{if(a[0]&&String(a[0]).includes('cdn.tailwindcss.com'))return;_w(...a);};</script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f0f4f8;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.25) 0, transparent 50%), 
-                radial-gradient(at 50% 0%, rgba(236, 72, 153, 0.25) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, rgba(45, 212, 191, 0.25) 0, transparent 50%),
-                radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.15) 0, transparent 50%);
-            background-attachment: fixed;
-            margin: 0;
-            overflow-x: hidden;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+
+        :root {
+            --body-bg:#f0f4f8;
+            --header-bg:rgba(255,255,255,0.45);
+            --header-border:rgba(255,255,255,0.5);
+            --text-title:#0f172a;
+            --text-date:#2563eb;
+            --text-sub:#64748b;
+            --text-time:#64748b;
+            --btn-bg:#ffffff;
+            --btn-border:rgba(226,232,240,0.8);
+            --btn-color:#475569;
+            --clock-bg:rgba(255,255,255,0.65);
+            --sk-bg:rgba(239,246,255,0.9);--sk-num:#2563eb;--sk-lbl:#93c5fd;
+            --sl-bg:rgba(248,250,252,0.9);--sl-num:#64748b;--sl-lbl:#94a3b8;
+            --ss-bg:rgba(240,253,244,0.9);--ss-num:#059669;--ss-lbl:#6ee7b7;
+            --free-card:linear-gradient(135deg,rgba(226,232,240,0.75),rgba(241,245,249,0.75));
+            --free-text:#94a3b8;
+            --timeline:rgba(203,213,225,0.55);
+            --dot-bg:#ffffff;
+            --modal-overlay:rgba(0,0,0,0.45);
+            --modal-bg:#ffffff;
+            --modal-title:#0f172a;
+            --modal-sub:#64748b;
+            --modal-close-bg:#f1f5f9;
+            --modal-close-col:#64748b;
+            --input-bg:rgba(248,250,252,0.9);
+            --input-border:rgba(203,213,225,0.6);
+            --input-text:#0f172a;
+            --input-ph:#94a3b8;
+            --sec-btn-bg:#f1f5f9;
+            --sec-btn-col:#64748b;
+            --toast-bg:#1e293b;
+            --toast-col:#f1f5f9;
+        }
+        html.dark {
+            --body-bg:#0f172a;
+            --header-bg:rgba(15,23,42,0.88);
+            --header-border:rgba(30,41,59,0.9);
+            --text-title:#f1f5f9;
+            --text-date:#60a5fa;
+            --text-sub:#94a3b8;
+            --text-time:#475569;
+            --btn-bg:#1e293b;
+            --btn-border:rgba(51,65,85,0.8);
+            --btn-color:#94a3b8;
+            --clock-bg:rgba(30,41,59,0.75);
+            --sk-bg:rgba(30,58,138,0.22);--sk-num:#60a5fa;--sk-lbl:#3b82f6;
+            --sl-bg:rgba(30,41,59,0.6);--sl-num:#64748b;--sl-lbl:#475569;
+            --ss-bg:rgba(6,78,59,0.22);--ss-num:#34d399;--ss-lbl:#059669;
+            --free-card:linear-gradient(135deg,rgba(30,41,59,0.85),rgba(15,23,42,0.7));
+            --free-text:#334155;
+            --timeline:rgba(51,65,85,0.6);
+            --dot-bg:#1e293b;
+            --modal-overlay:rgba(0,0,0,0.65);
+            --modal-bg:#1e293b;
+            --modal-title:#f1f5f9;
+            --modal-sub:#64748b;
+            --modal-close-bg:#0f172a;
+            --modal-close-col:#64748b;
+            --input-bg:rgba(15,23,42,0.85);
+            --input-border:rgba(51,65,85,0.6);
+            --input-text:#f1f5f9;
+            --input-ph:#475569;
+            --sec-btn-bg:#0f172a;
+            --sec-btn-col:#64748b;
+            --toast-bg:#f1f5f9;
+            --toast-col:#0f172a;
         }
 
-        .mobile-container {
-            max-width: 480px;
-            margin: 0 auto;
-            min-height: 100vh;
-            background-color: rgba(255, 255, 255, 0.1);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 80px rgba(0,0,0,0.05);
-            z-index: 10;
-        }
-
-        /* Kotak Glossy untuk Header */
-        .glossy-header {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 0 0 32px 32px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .day-btn {
-            transition: all 0.2s ease;
-            background-color: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            color: #64748b;
-        }
-
-        .active-tab {
-            background-color: #2563eb !important;
-            color: white !important;
-            border-color: #2563eb !important;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-        }
-
-        .timeline-line::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: rgba(203, 213, 225, 0.5);
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 9px;
-            height: 9px;
-            background: #ffffff;
-            border-radius: 50%;
-            border: 2px solid #3b82f6;
-            z-index: 10;
-        }
-
-        /* Kesan Glossy & Shining pada Card */
-        .schedule-card {
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-image: linear-gradient(rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%);
-        }
-
-        .schedule-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.1), 
-                rgba(255, 255, 255, 0.4), 
-                rgba(255, 255, 255, 0.1), 
-                transparent
-            );
-            transform: skewX(-25deg);
-            animation: shine 8s infinite ease-in-out;
-        }
-
-        @keyframes shine {
-            0% { left: -150%; }
-            15% { left: 150%; }
-            100% { left: 150%; }
-        }
+        *{box-sizing:border-box;}
+        body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--body-bg);background-image:radial-gradient(at 0% 0%,rgba(99,102,241,.2) 0,transparent 50%),radial-gradient(at 50% 0%,rgba(236,72,153,.2) 0,transparent 50%),radial-gradient(at 100% 0%,rgba(45,212,191,.2) 0,transparent 50%),radial-gradient(at 50% 100%,rgba(245,158,11,.12) 0,transparent 50%);background-attachment:fixed;margin:0;overflow-x:hidden;user-select:none;-webkit-tap-highlight-color:transparent;transition:background-color .35s ease;}
+        .mobile-container{max-width:480px;margin:0 auto;min-height:100vh;position:relative;display:flex;flex-direction:column;z-index:10;}
+        .glossy-header{background:var(--header-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--header-border);border-radius:0 0 32px 32px;box-shadow:0 10px 30px rgba(0,0,0,.04);transition:background .35s ease;position:sticky;top:0;z-index:50;}
+        .no-scrollbar::-webkit-scrollbar{display:none;}
+        .icon-btn{height:38px;width:38px;background:var(--btn-bg);border:1px solid var(--btn-border);color:var(--btn-color);border-radius:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s ease;font-size:14px;flex-shrink:0;}
+        .icon-btn:active{transform:scale(.93);}
+        .icon-btn.on{background:#2563eb!important;color:#fff!important;border-color:#2563eb!important;box-shadow:0 4px 14px rgba(37,99,235,.35);}
+        .clock-bar{background:var(--clock-bg);border-radius:18px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px);transition:background .35s ease;}
+        .stat-pill{flex:1;border-radius:16px;padding:8px 8px;text-align:center;transition:background .35s ease;}
+        .day-btn{transition:all .2s ease;background:var(--btn-bg);border:1px solid var(--btn-border);color:var(--btn-color);cursor:pointer;}
+        .active-tab{background:#2563eb!important;color:#fff!important;border-color:#2563eb!important;box-shadow:0 4px 12px rgba(37,99,235,.28);}
+        .timeline-line::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:var(--timeline);}
+        .timeline-dot{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:9px;height:9px;background:var(--dot-bg);border-radius:50%;border:2px solid #3b82f6;z-index:10;transition:all .3s ease;}
+        .timeline-dot.now{background:#2563eb;border-color:#1d4ed8;box-shadow:0 0 0 4px rgba(37,99,235,.25);}
+        .schedule-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.2);}
+        .schedule-card::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 50%,rgba(0,0,0,.08) 100%);pointer-events:none;border-radius:inherit;}
+        .schedule-card::after{content:'';position:absolute;top:0;left:-150%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),rgba(255,255,255,.35),rgba(255,255,255,.08),transparent);transform:skewX(-25deg);animation:shine 9s infinite ease-in-out;pointer-events:none;}
+        @keyframes shine{0%{left:-150%}14%{left:150%}100%{left:150%}}
+        .free-card{background:var(--free-card)!important;border-color:transparent!important;}
+        @keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(37,99,235,.4),0 6px 20px rgba(37,99,235,.25)}70%{box-shadow:0 0 0 7px rgba(37,99,235,0),0 6px 20px rgba(37,99,235,.25)}100%{box-shadow:0 0 0 0 rgba(37,99,235,0),0 6px 20px rgba(37,99,235,.25)}}
+        .now-card{outline:2px solid rgba(255,255,255,.65)!important;outline-offset:2px;animation:pulseRing 2s infinite;}
+        @keyframes swipeR{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes swipeL{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateX(0)}}
+        .anim-r{animation:swipeR .28s ease forwards;}
+        .anim-l{animation:swipeL .28s ease forwards;}
+        .anim-u{animation:fadeUp .3s ease forwards;}
+        .edit-overlay{position:absolute;inset:0;background:rgba(0,0,0,.38);border-radius:inherit;display:none;align-items:center;justify-content:center;z-index:15;cursor:pointer;}
+        .edit-mode .edit-overlay{display:flex;}
+        .note-btn{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;border:none;transition:all .2s ease;}
+        .note-btn:active{transform:scale(.88);}
+        .modal-overlay{position:fixed;inset:0;background:var(--modal-overlay);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:100;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+        .modal-overlay.open{opacity:1;pointer-events:all;}
+        .modal-sheet{background:var(--modal-bg);border-radius:28px 28px 0 0;padding:16px 20px 32px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;transform:translateY(100%);transition:transform .36s cubic-bezier(.32,.72,0,1);}
+        .modal-overlay.open .modal-sheet{transform:translateY(0);}
+        .modal-handle{width:36px;height:4px;background:rgba(148,163,184,.35);border-radius:99px;margin:0 auto 16px;}
+        .m-title{color:var(--modal-title);font-size:15px;font-weight:800;}
+        .m-sub{color:var(--modal-sub);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+        .m-close{width:30px;height:30px;border-radius:50%;background:var(--modal-close-bg);color:var(--modal-close-col);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;}
+        .m-label{color:var(--modal-sub);font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:6px;}
+        .m-input{width:100%;padding:10px 14px;border-radius:14px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--input-text);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;outline:none;transition:border-color .2s;resize:none;user-select:text;-webkit-user-select:text;}
+        .m-input::placeholder{color:var(--input-ph);}
+        .m-input:focus{border-color:#2563eb;}
+        .btn-p{flex:2;padding:11px 0;border-radius:18px;background:#2563eb;color:#fff;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;transition:all .2s;}
+        .btn-p:active{transform:scale(.97);}
+        .btn-s{flex:1;padding:11px 0;border-radius:18px;background:var(--sec-btn-bg);color:var(--sec-btn-col);border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;transition:all .2s;}
+        .btn-s:active{transform:scale(.97);}
+        .color-dot{width:30px;height:30px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .2s ease;flex-shrink:0;}
+        .color-dot.sel{border-color:#2563eb;transform:scale(1.2);box-shadow:0 0 0 2px rgba(37,99,235,.25);}
+        .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-90px);background:var(--toast-bg);color:var(--toast-col);padding:11px 20px;border-radius:18px;font-size:11px;font-weight:800;z-index:300;transition:transform .38s cubic-bezier(.32,.72,0,1);white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.18);max-width:calc(100vw - 40px);text-align:center;pointer-events:none;}
+        .toast.show{transform:translateX(-50%) translateY(0);}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+        .blink{animation:blink 1.2s infinite;}
+        .modal-sheet::-webkit-scrollbar{width:4px;}
+        .modal-sheet::-webkit-scrollbar-track{background:transparent;}
+        .modal-sheet::-webkit-scrollbar-thumb{background:rgba(148,163,184,.35);border-radius:4px;}
     </style>
     <link rel="icon" type="image/png" sizes="32x32" href="LOGO SEKOLAH.png">
     <link rel="icon" type="image/png" sizes="16x16" href="LOGO SEKOLAH.png">
 </head>
 <body>
 
-    <div class="mobile-container">
-        <!-- Header dengan Kotak Glossy -->
-        <header class="glossy-header pt-8 pb-4">
-            <div class="flex justify-between items-center mb-5 px-6">
-                <div>
-                    <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">Jadual Peribadi</h1>
-                    <p id="current-date" class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mt-0.5">MEMUATKAN...</p>
-                </div>
-                <div class="h-10 w-10 bg-white rounded-2xl flex items-center justify-center text-blue-600 shadow-sm border border-white/50">
-                    <i class="fas fa-calendar-day text-base"></i>
-                </div>
-            </div>
+<div class="toast" id="toast"></div>
 
-            <!-- Tab Hari -->
-            <div class="flex gap-2 overflow-x-auto no-scrollbar px-6">
-                <button onclick="selectDay('ISNIN')" id="tab-ISNIN" class="day-btn shrink-0 px-5 py-2.5 rounded-2xl text-[10px] font-bold uppercase tracking-wide">ISNIN</button>
-                <button onclick="selectDay('SELASA')" id="tab-SELASA" class="day-btn shrink-0 px-5 py-2.5 rounded-2xl text-[10px] font-bold uppercase tracking-wide">SELASA</button>
-                <button onclick="selectDay('RABU')" id="tab-RABU" class="day-btn shrink-0 px-5 py-2.5 rounded-2xl text-[10px] font-bold uppercase tracking-wide">RABU</button>
-                <button onclick="selectDay('KHAMIS')" id="tab-KHAMIS" class="day-btn shrink-0 px-5 py-2.5 rounded-2xl text-[10px] font-bold uppercase tracking-wide">KHAMIS</button>
-                <button onclick="selectDay('JUMAAT')" id="tab-JUMAAT" class="day-btn shrink-0 px-5 py-2.5 rounded-2xl text-[10px] font-bold uppercase tracking-wide">JUMAAT</button>
+<!-- ═══ NOTES MODAL ═══ -->
+<div class="modal-overlay" id="notes-modal">
+    <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="flex items-start justify-between mb-4">
+            <div>
+                <p class="m-title" id="nm-title">Nota</p>
+                <p class="m-sub mt-0.5" id="nm-sub">—</p>
             </div>
-        </header>
-
-        <!-- Kandungan Utama -->
-        <main class="flex-1 px-6 py-6">
-            <div class="relative timeline-line space-y-2.5 pb-12" id="schedule-list">
-                <!-- Data dimasukkan secara dinamik -->
-            </div>
-        </main>
+            <button class="m-close" onclick="closeModal('notes-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <label class="m-label">📝 Nota Saya</label>
+        <textarea id="nm-ta" class="m-input" rows="5" placeholder="Tulis nota di sini… cth: Bawa buku teks, ujian minggu depan"></textarea>
+        <div class="flex gap-2 mt-3">
+            <button class="btn-s" onclick="clearNote()">Padam Nota</button>
+            <button class="btn-p" onclick="saveNote()">Simpan</button>
+        </div>
     </div>
+</div>
 
-    <script>
-        // Fungsi untuk menukar format 24 jam ke 12 jam (e.g. 13:10 -> 1:10 PM)
-        function format12h(time24) {
-            const [hours, minutes] = time24.split(':');
-            let h = parseInt(hours);
-            const ampm = h >= 12 ? 'PM' : 'AM';
-            h = h % 12 || 12;
-            return `${h}:${minutes} ${ampm}`;
-        }
+<!-- ═══ EDIT MODAL ═══ -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="flex items-center justify-between mb-4">
+            <p class="m-title">✏️ Edit Slot Waktu</p>
+            <button class="m-close" onclick="closeModal('edit-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="space-y-3">
+            <div>
+                <label class="m-label">Kod Subjek</label>
+                <input type="text" id="em-sub" class="m-input" maxlength="10" placeholder="cth: SN 3A, MT 3B, FREE">
+            </div>
+            <div>
+                <label class="m-label">Penerangan</label>
+                <input type="text" id="em-desc" class="m-input" maxlength="35" placeholder="cth: Sains Tahun 3">
+            </div>
+            <div>
+                <label class="m-label">Warna Kad</label>
+                <div class="flex gap-2 flex-wrap mt-1" id="cpicker"></div>
+            </div>
+        </div>
+        <div class="flex gap-2 mt-4">
+            <button class="btn-s" onclick="resetSlot()">Reset Asal</button>
+            <button class="btn-p" onclick="saveEdit()">Simpan Perubahan</button>
+        </div>
+    </div>
+</div>
 
-        const freeCard = 'bg-gradient-to-br from-slate-200/60 via-slate-100/60 to-slate-200/60 text-slate-400 border-slate-200/50';
-        
-        const schedule = {
-            'ISNIN': [
-                { time: '13:10', sub: 'PERH', desc: 'Perhimpunan Sekolah', col: 'bg-gradient-to-br from-slate-950 to-slate-800 text-white' },
-                { time: '13:40', sub: 'SN 3I', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '14:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '14:40', sub: 'SN 2E', desc: 'Sains Tahun 2', col: 'bg-gradient-to-br from-violet-600 to-purple-500 text-white' },
-                { time: '15:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '15:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '16:10', sub: 'SN 2F', desc: 'Sains Tahun 2', col: 'bg-gradient-to-br from-violet-600 to-purple-500 text-white' },
-                { time: '16:40', sub: 'SN 2F', desc: 'Sains Tahun 2', col: 'bg-gradient-to-br from-violet-600 to-purple-500 text-white' },
-                { time: '17:10', sub: 'MT 3C', desc: 'Matematik Tahun 3', col: 'bg-gradient-to-br from-sky-500 to-cyan-400 text-white' },
-                { time: '17:40', sub: 'MT 3C', desc: 'Matematik Tahun 3', col: 'bg-gradient-to-br from-sky-500 to-cyan-400 text-white' },
-                { time: '18:10', sub: 'TAMAT', desc: 'Waktu Bersurai', col: 'bg-gradient-to-br from-emerald-600 to-teal-500 text-white' }
-            ],
-            'SELASA': [
-                { time: '13:10', sub: 'SN 3D', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '13:40', sub: 'SN 3D', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '14:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '14:40', sub: 'SN 3G', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '15:10', sub: 'SN 3G', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '15:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '16:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '16:40', sub: 'MT 3C', desc: 'Matematik Tahun 3', col: 'bg-gradient-to-br from-sky-500 to-cyan-400 text-white' },
-                { time: '17:10', sub: 'MT 3C', desc: 'Matematik Tahun 3', col: 'bg-gradient-to-br from-sky-500 to-cyan-400 text-white' },
-                { time: '17:40', sub: 'SN 3B', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '18:10', sub: 'TAMAT', desc: 'Waktu Bersurai', col: 'bg-gradient-to-br from-emerald-600 to-teal-500 text-white' }
-            ],
-            'RABU': [
-                { time: '13:10', sub: 'SN 3E', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '13:40', sub: 'SN 3E', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '14:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '14:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '15:10', sub: 'SN 3H', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '15:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '16:10', sub: 'SN 3H', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '16:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '17:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '17:40', sub: 'SN 3G', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '18:10', sub: 'TAMAT', desc: 'Waktu Bersurai', col: 'bg-gradient-to-br from-emerald-600 to-teal-500 text-white' }
-            ],
-            'KHAMIS': [
-                { time: '13:10', sub: 'SN 2F', desc: 'Sains Tahun 2', col: 'bg-gradient-to-br from-violet-600 to-purple-500 text-white' },
-                { time: '13:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '14:10', sub: 'SN 3H', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '14:40', sub: 'SN 3I', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '15:10', sub: 'SN 3I', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '15:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '16:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '16:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '17:10', sub: 'SN 2E', desc: 'Sains Tahun 2', col: 'bg-gradient-to-br from-violet-600 to-purple-500 text-white' },
-                { time: '17:40', sub: 'SN 2E', desc: 'Sains Tahun 2', col: 'bg-gradient-to-br from-violet-600 to-purple-500 text-white' },
-                { time: '18:10', sub: 'TAMAT', desc: 'Waktu Bersurai', col: 'bg-gradient-to-br from-emerald-600 to-teal-500 text-white' }
-            ],
-            'JUMAAT': [
-                { time: '13:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '13:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '14:10', sub: 'SN 3D', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '14:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '15:10', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '15:40', sub: 'FREE', desc: 'Masa Lapang', col: freeCard },
-                { time: '16:10', sub: 'SN 3B', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '16:40', sub: 'SN 3B', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '17:10', sub: 'SN 3E', desc: 'Sains Tahun 3', col: 'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white' },
-                { time: '17:40', sub: 'MT 3C', desc: 'Matematik Tahun 3', col: 'bg-gradient-to-br from-sky-500 to-cyan-400 text-white' },
-                { time: '18:10', sub: 'TAMAT', desc: 'Waktu Bersurai', col: 'bg-gradient-to-br from-emerald-600 to-teal-500 text-white' }
-            ]
-        };
+<!-- ═══ STATS MODAL ═══ -->
+<div class="modal-overlay" id="stats-modal">
+    <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="flex items-center justify-between mb-4">
+            <p class="m-title">📊 Statistik Hari Ini</p>
+            <button class="m-close" onclick="closeModal('stats-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="stats-content"></div>
+    </div>
+</div>
 
-        function selectDay(day) {
-            const list = document.getElementById('schedule-list');
-            list.innerHTML = '';
+<!-- ═══ APP ═══ -->
+<div class="mobile-container" id="app">
+    <header class="glossy-header pt-8 pb-4" id="header">
 
-            document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active-tab'));
-            const activeBtn = document.getElementById(`tab-${day}`);
-            if (activeBtn) {
-                activeBtn.classList.add('active-tab');
-                activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
+        <!-- Title Row -->
+        <div class="flex justify-between items-center mb-3 px-5">
+            <div>
+                <h1 class="text-xl font-extrabold tracking-tight" style="color:var(--text-title)">Jadual Peribadi</h1>
+                <p id="current-date" class="text-[10px] font-bold uppercase tracking-widest mt-0.5" style="color:var(--text-date)">MEMUATKAN...</p>
+            </div>
+            <div class="flex gap-1.5">
+                <button class="icon-btn" id="dark-btn" onclick="toggleDark()" title="Mod Gelap"><i class="fas fa-moon" id="dark-icon"></i></button>
+                <button class="icon-btn" onclick="exportJadual()" title="Kongsi Jadual"><i class="fas fa-share-nodes"></i></button>
+                <button class="icon-btn" id="edit-btn" onclick="toggleEdit()" title="Edit Jadual"><i class="fas fa-pen"></i></button>
+            </div>
+        </div>
 
-            if (schedule[day]) {
-                schedule[day].forEach((item, index) => {
-                    const row = document.createElement('div');
-                    row.className = "pl-11 relative animate-in fade-in slide-in-from-bottom-3 duration-400";
-                    row.style.animationDelay = `${index * 60}ms`;
-                    row.innerHTML = `
-                        <div class="timeline-dot shadow-sm"></div>
-                        <div class="mb-1">
-                            <span class="text-[9px] font-black text-slate-500 flex items-center gap-1 uppercase tracking-tighter">
-                                <i class="far fa-clock text-[8px]"></i> ${format12h(item.time)}
-                            </span>
-                        </div>
-                        <div class="${item.col} schedule-card py-2 px-3 rounded-[20px] shadow-lg shadow-black/5 flex flex-col items-center justify-center text-center transition-all active:scale-[0.98]">
-                            <h3 class="text-sm font-black leading-tight tracking-tight mb-0.5">${item.sub}</h3>
-                            <p class="text-[9px] opacity-90 font-bold uppercase tracking-wider">${item.desc}</p>
-                        </div>
-                    `;
-                    list.appendChild(row);
-                });
-            }
-        }
+        <!-- Clock Row -->
+        <div class="px-5 mb-3">
+            <div class="clock-bar">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full blink" style="background:#22c55e"></div>
+                    <span id="live-clock" class="font-extrabold" style="font-size:15px;color:var(--text-title)">--:-- --</span>
+                </div>
+                <div class="text-right">
+                    <p id="p-label" style="font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#2563eb">—</p>
+                    <p id="p-info" style="font-size:11px;font-weight:800;color:var(--text-title)">—</p>
+                </div>
+            </div>
+        </div>
 
-        function init() {
-            const now = new Date();
-            const options = { weekday: 'long', day: 'numeric', month: 'long' };
-            document.getElementById('current-date').innerText = now.toLocaleDateString('ms-MY', options);
+        <!-- Stats Row -->
+        <div class="px-5 mb-3">
+            <div class="flex gap-2" id="stats-bar" onclick="openStatsModal()" style="cursor:pointer" title="Lihat butiran"></div>
+        </div>
 
-            const dayNames = ['AHAD', 'ISNIN', 'SELASA', 'RABU', 'KHAMIS', 'JUMAAT', 'SABTU'];
-            const today = dayNames[now.getDay()];
-            
-            if (schedule[today]) {
-                selectDay(today);
+        <!-- Day Tabs -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar px-5">
+            <button onclick="selectDay('ISNIN')" id="tab-ISNIN" class="day-btn shrink-0 px-5 py-2 rounded-2xl text-[10px] font-bold uppercase tracking-wide">ISNIN</button>
+            <button onclick="selectDay('SELASA')" id="tab-SELASA" class="day-btn shrink-0 px-5 py-2 rounded-2xl text-[10px] font-bold uppercase tracking-wide">SELASA</button>
+            <button onclick="selectDay('RABU')" id="tab-RABU" class="day-btn shrink-0 px-5 py-2 rounded-2xl text-[10px] font-bold uppercase tracking-wide">RABU</button>
+            <button onclick="selectDay('KHAMIS')" id="tab-KHAMIS" class="day-btn shrink-0 px-5 py-2 rounded-2xl text-[10px] font-bold uppercase tracking-wide">KHAMIS</button>
+            <button onclick="selectDay('JUMAAT')" id="tab-JUMAAT" class="day-btn shrink-0 px-5 py-2 rounded-2xl text-[10px] font-bold uppercase tracking-wide">JUMAAT</button>
+        </div>
+    </header>
+
+    <main class="flex-1 px-5 py-5"
+          ontouchstart="tsStart(event)" ontouchend="tsEnd(event)">
+        <div class="relative timeline-line space-y-2.5 pb-16" id="slist"></div>
+    </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/* ── COLOR PRESETS ── */
+const COLORS=[
+    {key:'red',   cls:'bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white', bg:'#7f1d1d'},
+    {key:'sky',   cls:'bg-gradient-to-br from-sky-500 to-cyan-400 text-white',            bg:'#0ea5e9'},
+    {key:'violet',cls:'bg-gradient-to-br from-violet-600 to-purple-500 text-white',       bg:'#7c3aed'},
+    {key:'emerald',cls:'bg-gradient-to-br from-emerald-600 to-teal-500 text-white',       bg:'#059669'},
+    {key:'amber', cls:'bg-gradient-to-br from-amber-500 to-orange-400 text-white',        bg:'#f59e0b'},
+    {key:'pink',  cls:'bg-gradient-to-br from-pink-600 to-rose-500 text-white',           bg:'#db2777'},
+    {key:'slate', cls:'bg-gradient-to-br from-slate-950 to-slate-800 text-white',         bg:'#0f172a'},
+    {key:'free',  cls:'FREE',                                                              bg:'#cbd5e1'},
+];
+function getCls(k){ return COLORS.find(c=>c.key===k)?.cls||COLORS[0].cls; }
+
+/* ── ORIGINAL DATA ── */
+const ORIG={
+    ISNIN:[
+        {time:'13:10',sub:'PERH', desc:'Perhimpunan Sekolah', colKey:'slate'},
+        {time:'13:40',sub:'SN 3I',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'14:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'14:40',sub:'SN 2E',desc:'Sains Tahun 2',       colKey:'violet'},
+        {time:'15:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'15:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'16:10',sub:'SN 2F',desc:'Sains Tahun 2',       colKey:'violet'},
+        {time:'16:40',sub:'SN 2F',desc:'Sains Tahun 2',       colKey:'violet'},
+        {time:'17:10',sub:'MT 3C',desc:'Matematik Tahun 3',   colKey:'sky'},
+        {time:'17:40',sub:'MT 3C',desc:'Matematik Tahun 3',   colKey:'sky'},
+        {time:'18:10',sub:'TAMAT',desc:'Waktu Bersurai',       colKey:'emerald'},
+    ],
+    SELASA:[
+        {time:'13:10',sub:'SN 3D',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'13:40',sub:'SN 3D',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'14:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'14:40',sub:'SN 3G',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'15:10',sub:'SN 3G',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'15:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'16:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'16:40',sub:'MT 3C',desc:'Matematik Tahun 3',   colKey:'sky'},
+        {time:'17:10',sub:'MT 3C',desc:'Matematik Tahun 3',   colKey:'sky'},
+        {time:'17:40',sub:'SN 3B',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'18:10',sub:'TAMAT',desc:'Waktu Bersurai',       colKey:'emerald'},
+    ],
+    RABU:[
+        {time:'13:10',sub:'SN 3E',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'13:40',sub:'SN 3E',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'14:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'14:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'15:10',sub:'SN 3H',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'15:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'16:10',sub:'SN 3H',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'16:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'17:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'17:40',sub:'SN 3G',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'18:10',sub:'TAMAT',desc:'Waktu Bersurai',       colKey:'emerald'},
+    ],
+    KHAMIS:[
+        {time:'13:10',sub:'SN 2F',desc:'Sains Tahun 2',       colKey:'violet'},
+        {time:'13:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'14:10',sub:'SN 3H',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'14:40',sub:'SN 3I',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'15:10',sub:'SN 3I',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'15:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'16:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'16:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'17:10',sub:'SN 2E',desc:'Sains Tahun 2',       colKey:'violet'},
+        {time:'17:40',sub:'SN 2E',desc:'Sains Tahun 2',       colKey:'violet'},
+        {time:'18:10',sub:'TAMAT',desc:'Waktu Bersurai',       colKey:'emerald'},
+    ],
+    JUMAAT:[
+        {time:'13:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'13:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'14:10',sub:'SN 3D',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'14:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'15:10',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'15:40',sub:'FREE', desc:'Masa Lapang',         colKey:'free'},
+        {time:'16:10',sub:'SN 3B',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'16:40',sub:'SN 3B',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'17:10',sub:'SN 3E',desc:'Sains Tahun 3',       colKey:'red'},
+        {time:'17:40',sub:'MT 3C',desc:'Matematik Tahun 3',   colKey:'sky'},
+        {time:'18:10',sub:'TAMAT',desc:'Waktu Bersurai',       colKey:'emerald'},
+    ],
+};
+
+/* ── STATE ── */
+const DAYS=['ISNIN','SELASA','RABU','KHAMIS','JUMAAT'];
+const DMAP=['AHAD','ISNIN','SELASA','RABU','KHAMIS','JUMAAT','SABTU'];
+let curDay='ISNIN', editMode=false;
+let editCtx={day:null,idx:null}, noteCtx={key:null}, selColor='red';
+let sx=0, sy=0, notifChecked={};
+
+/* ── STORAGE ── */
+function getData(){try{const s=localStorage.getItem('jp_d');if(s)return JSON.parse(s);}catch(e){}return JSON.parse(JSON.stringify(ORIG));}
+function setData(d){localStorage.setItem('jp_d',JSON.stringify(d));}
+function getNotes(){try{const s=localStorage.getItem('jp_n');if(s)return JSON.parse(s);}catch(e){}return {};}
+function setNotes(n){localStorage.setItem('jp_n',JSON.stringify(n));}
+
+/* ── HELPERS ── */
+function fmt12(t){const[h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM';return`${(h%12)||12}:${String(m).padStart(2,'0')} ${ap}`;}
+function toMin(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
+let _tT;
+function toast(msg,dur=2700){clearTimeout(_tT);const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');_tT=setTimeout(()=>el.classList.remove('show'),dur);}
+
+/* ── DARK MODE ── */
+function toggleDark(){const d=document.documentElement.classList.toggle('dark');localStorage.setItem('jp_dk',d?'1':'0');applyDark(d);}
+function applyDark(d){
+    const ic=document.getElementById('dark-icon'),bt=document.getElementById('dark-btn');
+    ic.className=d?'fas fa-sun':'fas fa-moon';
+    if(d){bt.style.cssText='background:#1e293b;color:#fbbf24;border-color:#334155';}
+    else{bt.style.cssText='';}
+}
+function loadDark(){if(localStorage.getItem('jp_dk')==='1'){document.documentElement.classList.add('dark');applyDark(true);}}
+
+/* ── STATS ── */
+function renderStats(day){
+    const slots=getData()[day]||[];
+    const kelas=slots.filter(s=>s.sub!=='FREE'&&s.sub!=='TAMAT'&&s.sub!=='PERH');
+    const lapang=slots.filter(s=>s.sub==='FREE');
+    const subj=[...new Set(kelas.map(s=>s.desc.split(' ')[0]))].join(' & ')||'—';
+    document.getElementById('stats-bar').innerHTML=`
+        <div class="stat-pill" style="background:var(--sk-bg)">
+            <p style="color:var(--sk-num);font-size:20px;font-weight:900;line-height:1.1">${kelas.length}</p>
+            <p style="color:var(--sk-lbl);font-size:7.5px;font-weight:900;text-transform:uppercase;letter-spacing:.07em">Kelas</p>
+        </div>
+        <div class="stat-pill" style="background:var(--sl-bg)">
+            <p style="color:var(--sl-num);font-size:20px;font-weight:900;line-height:1.1">${lapang.length}</p>
+            <p style="color:var(--sl-lbl);font-size:7.5px;font-weight:900;text-transform:uppercase;letter-spacing:.07em">Lapang</p>
+        </div>
+        <div class="stat-pill" style="background:var(--ss-bg);flex:2">
+            <p style="color:var(--ss-num);font-size:11px;font-weight:900;line-height:1.25">${subj}</p>
+            <p style="color:var(--ss-lbl);font-size:7.5px;font-weight:900;text-transform:uppercase;letter-spacing:.07em">Subjek</p>
+        </div>`;
+}
+
+/* ── STATS MODAL ── */
+function openStatsModal(){
+    const slots=getData()[curDay]||[];
+    const kelas=slots.filter(s=>s.sub!=='FREE'&&s.sub!=='TAMAT'&&s.sub!=='PERH');
+    const lapang=slots.filter(s=>s.sub==='FREE');
+    const cnt={};kelas.forEach(s=>{cnt[s.desc]=(cnt[s.desc]||0)+1;});
+    const rows=Object.entries(cnt).map(([d,c])=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--clock-bg);border-radius:14px;">
+            <span style="color:var(--text-title);font-size:12px;font-weight:700">${d}</span>
+            <span style="color:#2563eb;font-size:11px;font-weight:900">${c} sesi</span>
+        </div>`).join('');
+    document.getElementById('stats-content').innerHTML=`
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+            <div style="flex:1;background:var(--sk-bg);border-radius:16px;padding:14px;text-align:center">
+                <p style="color:var(--sk-num);font-size:30px;font-weight:900;line-height:1">${kelas.length}</p>
+                <p style="color:var(--sk-lbl);font-size:9px;font-weight:900;text-transform:uppercase">Total Kelas</p>
+            </div>
+            <div style="flex:1;background:var(--sl-bg);border-radius:16px;padding:14px;text-align:center">
+                <p style="color:var(--sl-num);font-size:30px;font-weight:900;line-height:1">${lapang.length}</p>
+                <p style="color:var(--sl-lbl);font-size:9px;font-weight:900;text-transform:uppercase">Masa Lapang</p>
+            </div>
+            <div style="flex:1;background:var(--ss-bg);border-radius:16px;padding:14px;text-align:center">
+                <p style="color:var(--ss-num);font-size:30px;font-weight:900;line-height:1">${kelas.length/2}j</p>
+                <p style="color:var(--ss-lbl);font-size:9px;font-weight:900;text-transform:uppercase">Ngajar</p>
+            </div>
+        </div>
+        <p style="color:var(--text-sub);font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Pecahan Subjek — ${curDay}</p>
+        <div style="display:flex;flex-direction:column;gap:6px">${rows||'<p style="color:var(--text-sub);font-size:12px;text-align:center;padding:18px">Tiada kelas hari ini</p>'}</div>`;
+    openModal('stats-modal');
+}
+
+/* ── CLOCK ── */
+function updateClock(){
+    const now=new Date();
+    const h=now.getHours(),m=now.getMinutes();
+    const ap=h>=12?'PM':'AM';
+    document.getElementById('live-clock').textContent=`${(h%12)||12}:${String(m).padStart(2,'0')} ${ap}`;
+    const todayName=DMAP[now.getDay()];
+    const isToday=todayName===curDay;
+    const nowMin=h*60+m;
+    const slots=getData()[curDay]||[];
+    let activeIdx=-1;
+    if(isToday){for(let i=0;i<slots.length-1;i++){if(nowMin>=toMin(slots[i].time)&&nowMin<toMin(slots[i+1].time)){activeIdx=i;break;}}}
+    document.querySelectorAll('.srow').forEach((row,i)=>{
+        const card=row.querySelector('.schedule-card');
+        const dot=row.querySelector('.timeline-dot');
+        if(i===activeIdx&&isToday){card?.classList.add('now-card');dot?.classList.add('now');}
+        else{card?.classList.remove('now-card');dot?.classList.remove('now');}
+    });
+    const lbl=document.getElementById('p-label'),inf=document.getElementById('p-info');
+    if(!isToday){lbl.textContent='HARI LAIN';lbl.style.color='var(--text-sub)';inf.textContent='—';return;}
+    if(activeIdx>=0){
+        const slot=slots[activeIdx];
+        const diff=toMin(slots[activeIdx+1].time)-nowMin;
+        lbl.textContent='🔴 SEKARANG';lbl.style.color='#ef4444';
+        inf.textContent=`${slot.sub} — ${diff} min lagi`;
+    } else {
+        let next=null;
+        for(let i=0;i<slots.length;i++){const sm=toMin(slots[i].time);if(sm>nowMin){next={slot:slots[i],diff:sm-nowMin};break;}}
+        if(next){
+            const close=next.diff<=5;
+            lbl.textContent=close?'⚠️ HAMPIR':'⏭ SETERUSNYA';
+            lbl.style.color=close?'#f59e0b':'#2563eb';
+            inf.textContent=`${next.slot.sub} dalam ${next.diff} min`;
+            if(close){const nk=`notif_${curDay}_${next.slot.time}`;if(!notifChecked[nk]){notifChecked[nk]=true;sendNotif(next.slot);}}
+        } else {lbl.textContent='✅ SELESAI';lbl.style.color='#22c55e';inf.textContent='Semua kelas tamat';}
+    }
+}
+
+/* ── NOTIFICATIONS ── */
+async function reqNotif(){if('Notification'in window&&Notification.permission==='default')await Notification.requestPermission();}
+function sendNotif(slot){
+    if(Notification.permission!=='granted')return;
+    new Notification('⏰ Kelas Akan Bermula!',{body:`${slot.sub} — ${slot.desc} dalam 5 minit! (${fmt12(slot.time)})`,icon:'LOGO SEKOLAH.png'});
+}
+
+/* ── SWIPE ── */
+function tsStart(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;}
+function tsEnd(e){
+    const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>48){
+        const ci=DAYS.indexOf(curDay);
+        if(dx<0&&ci<DAYS.length-1)selectDay(DAYS[ci+1],'r');
+        else if(dx>0&&ci>0)selectDay(DAYS[ci-1],'l');
+    }
+}
+
+/* ── EDIT MODE ── */
+function toggleEdit(){
+    editMode=!editMode;
+    const btn=document.getElementById('edit-btn'),list=document.getElementById('slist');
+    if(editMode){btn.classList.add('on');list.classList.add('edit-mode');toast('✏️ Mod Edit AKTIF — ketuk kad untuk edit');}
+    else{btn.classList.remove('on');list.classList.remove('edit-mode');toast('✅ Mod Edit dimatikan');}
+}
+
+/* ── EDIT MODAL ── */
+function openEditModal(day,idx){
+    editCtx={day,idx};
+    const slot=getData()[day][idx];
+    document.getElementById('em-sub').value=slot.sub;
+    document.getElementById('em-desc').value=slot.desc;
+    selColor=slot.colKey||'red';
+    renderCP();
+    openModal('edit-modal');
+}
+function renderCP(){
+    document.getElementById('cpicker').innerHTML=COLORS.map(c=>`<div class="color-dot ${c.key===selColor?'sel':''}" style="background:${c.bg}" onclick="pickColor('${c.key}')" title="${c.key}"></div>`).join('');
+}
+function pickColor(k){selColor=k;renderCP();}
+function saveEdit(){
+    const sub=document.getElementById('em-sub').value.trim(),desc=document.getElementById('em-desc').value.trim();
+    if(!sub||!desc){toast('⚠️ Sila isi semua maklumat!');return;}
+    const data=getData();
+    data[editCtx.day][editCtx.idx]={...data[editCtx.day][editCtx.idx],sub,desc,colKey:selColor};
+    setData(data);closeModal('edit-modal');selectDay(editCtx.day);toast('✅ Slot berjaya dikemaskini!');
+}
+function resetSlot(){
+    const data=getData();
+    data[editCtx.day][editCtx.idx]={...ORIG[editCtx.day][editCtx.idx]};
+    setData(data);closeModal('edit-modal');selectDay(editCtx.day);toast('🔄 Slot telah diset semula');
+}
+
+/* ── NOTES ── */
+function openNoteModal(key,sub,desc){
+    noteCtx={key};
+    document.getElementById('nm-title').textContent=sub;
+    document.getElementById('nm-sub').textContent=desc;
+    document.getElementById('nm-ta').value=getNotes()[key]||'';
+    openModal('notes-modal');
+    setTimeout(()=>document.getElementById('nm-ta').focus(),380);
+}
+function saveNote(){
+    const txt=document.getElementById('nm-ta').value.trim();
+    const notes=getNotes();
+    if(txt)notes[noteCtx.key]=txt;else delete notes[noteCtx.key];
+    setNotes(notes);closeModal('notes-modal');selectDay(curDay);
+    toast(txt?'📝 Nota disimpan!':'🗑️ Nota dipadam');
+}
+function clearNote(){document.getElementById('nm-ta').value='';saveNote();}
+
+/* ── MODALS ── */
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+['notes-modal','edit-modal','stats-modal'].forEach(id=>{
+    document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeModal(id);});
+});
+
+/* ── EXPORT ── */
+async function exportJadual(){
+    toast('📸 Menyediakan gambar...');
+    try{
+        const canvas=await html2canvas(document.getElementById('app'),{scale:2,useCORS:true,backgroundColor:null,logging:false});
+        canvas.toBlob(async blob=>{
+            const file=new File([blob],`Jadual_${curDay}.png`,{type:'image/png'});
+            if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+                await navigator.share({files:[file],title:`Jadual ${curDay}`});
             } else {
-                selectDay('ISNIN');
+                const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Jadual_${curDay}.png`;a.click();
+                toast('✅ Gambar berjaya disimpan!');
             }
-        }
+        },'image/png');
+    }catch(e){toast('❌ Gagal export. Cuba lagi.');}
+}
 
-        window.onload = init;
-    </script>
+/* ── RENDER ── */
+function selectDay(day,dir=null){
+    curDay=day;
+    document.querySelectorAll('.day-btn').forEach(b=>b.classList.remove('active-tab'));
+    const tab=document.getElementById(`tab-${day}`);
+    if(tab){tab.classList.add('active-tab');tab.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});}
+    renderStats(day);
+    const list=document.getElementById('slist');
+    const data=getData(),notes=getNotes(),slots=data[day]||[];
+    const aCls=dir==='r'?'anim-r':dir==='l'?'anim-l':'anim-u';
+    list.innerHTML='';
+    if(editMode)list.classList.add('edit-mode');
+    slots.forEach((item,idx)=>{
+        const nk=`${day}_${idx}`,note=notes[nk]||'',isFree=item.colKey==='free';
+        const colCls=isFree?'':getCls(item.colKey);
+        const row=document.createElement('div');
+        row.className=`pl-11 relative srow ${aCls}`;
+        row.style.animationDelay=dir?'0ms':`${idx*45}ms`;
+        // Escape for inline JS
+        const subE=item.sub.replace(/'/g,"\\'"),descE=item.desc.replace(/'/g,"\\'");
+        row.innerHTML=`
+            <div class="timeline-dot shadow-sm"></div>
+            <div style="margin-bottom:4px">
+                <span style="font-size:9px;font-weight:900;color:var(--text-time);display:flex;align-items:center;gap:4px;text-transform:uppercase;letter-spacing:-.02em">
+                    <i class="far fa-clock" style="font-size:8px"></i> ${fmt12(item.time)}
+                </span>
+            </div>
+            <div class="${colCls} ${isFree?'free-card':''} schedule-card py-2.5 px-3 rounded-[20px] shadow-md flex items-center justify-between transition-all active:scale-[0.98]" style="position:relative">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center">
+                    <h3 style="font-size:13px;font-weight:900;line-height:1.2;letter-spacing:-.01em;margin-bottom:2px;${isFree?'color:var(--free-text)':''}">${item.sub}</h3>
+                    <p style="font-size:9px;opacity:.85;font-weight:700;text-transform:uppercase;letter-spacing:.05em;${isFree?'color:var(--free-text)':''}">${item.desc}</p>
+                    ${note?`<div style="margin-top:5px;display:flex;align-items:center;gap:3px;opacity:.85">
+                        <i class="fas fa-note-sticky" style="font-size:8px;color:#fbbf24"></i>
+                        <span style="font-size:8px;font-weight:700;${isFree?'color:var(--free-text)':''}">${note.length>28?note.substring(0,28)+'…':note}</span>
+                    </div>`:''}
+                </div>
+                <button class="note-btn" onclick="event.stopPropagation();openNoteModal('${nk}','${subE}','${descE}')">
+                    <i class="fas fa-note-sticky" style="font-size:10px;${note?'color:#fbbf24':'color:rgba(255,255,255,0.45)'}"></i>
+                </button>
+                <div class="edit-overlay" onclick="openEditModal('${day}',${idx})">
+                    <div style="background:rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;display:flex;align-items:center;gap:6px">
+                        <i class="fas fa-pen" style="color:#fff;font-size:11px"></i>
+                        <span style="color:#fff;font-size:10px;font-weight:900">EDIT</span>
+                    </div>
+                </div>
+            </div>`;
+        list.appendChild(row);
+    });
+    updateClock();
+}
+
+/* ── INIT ── */
+function init(){
+    loadDark();
+    const now=new Date();
+    document.getElementById('current-date').textContent=now.toLocaleDateString('ms-MY',{weekday:'long',day:'numeric',month:'long'});
+    const today=DMAP[now.getDay()];
+    selectDay(ORIG[today]?today:'ISNIN');
+    setInterval(updateClock,1000);
+    setTimeout(reqNotif,2500);
+}
+window.onload=init;
+</script>
 </body>
 </html>
