@@ -261,8 +261,31 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--body-bg);
       <button class="m-close" onclick="closeModal('edit-modal')"><i class="fas fa-times"></i></button>
     </div>
     <div class="space-y-3">
-      <div><label class="m-label">Kod Subjek</label><input type="text" id="em-sub" class="m-input" maxlength="10" placeholder="cth: SN 3A, MT 3B, FREE"></div>
-      <div><label class="m-label">Penerangan</label><input type="text" id="em-desc" class="m-input" maxlength="35" placeholder="cth: Sains Tahun 3"></div>
+      <div>
+        <label class="m-label">Kod Subjek</label>
+        <select id="em-sub-select" class="m-input" onchange="handleSubSelectChange()">
+          <option value="SN 3A">SN 3A</option>
+          <option value="SN 3B">SN 3B</option>
+          <option value="SN 3C">SN 3C</option>
+          <option value="SN 3D">SN 3D</option>
+          <option value="SN 3E">SN 3E</option>
+          <option value="SN 3F">SN 3F</option>
+          <option value="SN 3G">SN 3G</option>
+          <option value="SN 3H">SN 3H</option>
+          <option value="SN 3I">SN 3I</option>
+          <option value="__custom__">✏️ Lain (edit sendiri)</option>
+        </select>
+        <input type="text" id="em-sub" class="m-input mt-2" maxlength="10" placeholder="cth: SN 3A, MT 3B, FREE" style="display:none">
+      </div>
+      <div>
+        <label class="m-label">Penerangan</label>
+        <select id="em-desc-select" class="m-input" onchange="handleDescSelectChange()">
+          <option value="SAINS TAHUN 3">SAINS TAHUN 3</option>
+          <option value="SAINS TAHUN 2">SAINS TAHUN 2</option>
+          <option value="__custom__">✏️ Lain (edit sendiri)</option>
+        </select>
+        <input type="text" id="em-desc" class="m-input mt-2" maxlength="35" placeholder="cth: Sains Tahun 3" style="display:none">
+      </div>
       <div><label class="m-label">Warna Kad</label><div class="flex gap-2 flex-wrap mt-1" id="cpicker"></div></div>
     </div>
     <div class="flex gap-2 mt-4">
@@ -821,11 +844,34 @@ function toggleEdit(){
 }
 
 /* ════ EDIT MODAL ════ */
+const SUB_OPTIONS=['SN 3A','SN 3B','SN 3C','SN 3D','SN 3E','SN 3F','SN 3G','SN 3H','SN 3I'];
+const DESC_OPTIONS=['SAINS TAHUN 3','SAINS TAHUN 2'];
+
+function handleSubSelectChange(){
+  const sel=document.getElementById('em-sub-select'),inp=document.getElementById('em-sub');
+  if(sel.value==='__custom__'){inp.style.display='block';inp.value='';inp.focus();}
+  else{inp.style.display='none';inp.value=sel.value;}
+}
+function handleDescSelectChange(){
+  const sel=document.getElementById('em-desc-select'),inp=document.getElementById('em-desc');
+  if(sel.value==='__custom__'){inp.style.display='block';inp.value='';inp.focus();}
+  else{inp.style.display='none';inp.value=sel.value;}
+}
+function setSubField(val){
+  const sel=document.getElementById('em-sub-select'),inp=document.getElementById('em-sub');
+  if(SUB_OPTIONS.includes(val)){sel.value=val;inp.style.display='none';inp.value=val;}
+  else{sel.value='__custom__';inp.style.display='block';inp.value=val;}
+}
+function setDescField(val){
+  const sel=document.getElementById('em-desc-select'),inp=document.getElementById('em-desc');
+  if(DESC_OPTIONS.includes(val)){sel.value=val;inp.style.display='none';inp.value=val;}
+  else{sel.value='__custom__';inp.style.display='block';inp.value=val;}
+}
 function openEditModal(day,idx){
   editCtx={day,idx};
   const slot=getData()[day][idx];
-  document.getElementById('em-sub').value=slot.sub;
-  document.getElementById('em-desc').value=slot.desc;
+  setSubField(slot.sub);
+  setDescField(slot.desc);
   selColor=slot.colKey||'red';
   renderCP();openModal('edit-modal');
 }
@@ -843,7 +889,10 @@ function saveEdit(){
 function resetSlot(){
   const data=getData();
   data[editCtx.day][editCtx.idx]={...ORIG[editCtx.day][editCtx.idx]};
-  setData(data);closeModal('edit-modal');selectDay(editCtx.day);toast('🔄 Slot telah diset semula');
+  setData(data);
+  const orig=ORIG[editCtx.day][editCtx.idx];
+  setSubField(orig.sub);setDescField(orig.desc);selColor=orig.colKey||'red';renderCP();
+  selectDay(editCtx.day);toast('🔄 Slot telah diset semula');
 }
 
 /* ════ NOTES ════ */
