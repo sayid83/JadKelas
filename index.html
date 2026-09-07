@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ms">
 <head>
@@ -273,6 +274,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--body-bg);
           <option value="SN 3G">SN 3G</option>
           <option value="SN 3H">SN 3H</option>
           <option value="SN 3I">SN 3I</option>
+          <option value="SN 2E">SN 2E</option>
+          <option value="SN 2F">SN 2F</option>
+          <option value="MT 3C">MT 3C</option>
+          <option value="FREE">FREE</option>
           <option value="__custom__">✏️ Lain (edit sendiri)</option>
         </select>
         <input type="text" id="em-sub" class="m-input mt-2" maxlength="10" placeholder="cth: SN 3A, MT 3B, FREE" style="display:none">
@@ -282,6 +287,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--body-bg);
         <select id="em-desc-select" class="m-input" onchange="handleDescSelectChange()">
           <option value="SAINS TAHUN 3">SAINS TAHUN 3</option>
           <option value="SAINS TAHUN 2">SAINS TAHUN 2</option>
+          <option value="MASA LAPANG">MASA LAPANG</option>
+          <option value="MATE TAHUN 3">MATE TAHUN 3</option>
           <option value="__custom__">✏️ Lain (edit sendiri)</option>
         </select>
         <input type="text" id="em-desc" class="m-input mt-2" maxlength="35" placeholder="cth: Sains Tahun 3" style="display:none">
@@ -844,8 +851,8 @@ function toggleEdit(){
 }
 
 /* ════ EDIT MODAL ════ */
-const SUB_OPTIONS=['SN 3A','SN 3B','SN 3C','SN 3D','SN 3E','SN 3F','SN 3G','SN 3H','SN 3I'];
-const DESC_OPTIONS=['SAINS TAHUN 3','SAINS TAHUN 2'];
+const SUB_OPTIONS=['SN 3A','SN 3B','SN 3C','SN 3D','SN 3E','SN 3F','SN 3G','SN 3H','SN 3I','SN 2E','SN 2F','MT 3C','FREE'];
+const DESC_OPTIONS=['SAINS TAHUN 3','SAINS TAHUN 2','MASA LAPANG','MATE TAHUN 3'];
 
 function handleSubSelectChange(){
   const sel=document.getElementById('em-sub-select'),inp=document.getElementById('em-sub');
